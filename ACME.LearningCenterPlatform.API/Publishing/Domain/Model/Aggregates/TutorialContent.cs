@@ -1,4 +1,5 @@
-﻿using ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Entities;
+﻿using ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Commands;
+using ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Entities;
 using ACME.LearningCenterPlatform.API.Publishing.Domain.Model.ValueObjects;
 
 namespace ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Aggregates;
@@ -65,7 +66,7 @@ public partial class Tutorial : IPublishable
                                    (string)asset.GetContent() == readableContent);
     }
 
-    public void AddVideo(string videoUrl)
+    private void AddVideo(string videoUrl)
     {
         if (ExistsVideoByUrl(videoUrl)) return;
         Assets.Add(new VideoAsset(videoUrl));
@@ -103,5 +104,11 @@ public partial class Tutorial : IPublishable
                 new ContentItem(asset.Type.ToString(), asset.GetContent() as string ?? string.Empty)
                 ));
         return content;
+    }
+
+    public void Handle(AddVideoAssetToTutorialCommand command)
+    {
+        if (command.TutorialId == Id)
+            AddVideo(command.VideoUrl);
     }
 }
