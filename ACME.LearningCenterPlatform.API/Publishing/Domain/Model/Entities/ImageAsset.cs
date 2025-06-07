@@ -2,7 +2,7 @@
 
 namespace ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Entities;
 
-public class ImageAsset(EAssetType Type) : Asset(Type)
+public class ImageAsset(EAssetType type) : Asset(type)
 {
     private Uri? ImageUri { get; }
     
