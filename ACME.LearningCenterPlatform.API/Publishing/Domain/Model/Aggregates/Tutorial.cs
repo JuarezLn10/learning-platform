@@ -12,7 +12,7 @@ public partial class Tutorial
     public Category Category { get; internal set; }
     public int CategoryId { get; private set; }
 
-    public Tutorial(string title, string summary, int categoryId)
+    private Tutorial(string title, string summary, int categoryId)
     {
         Title = title;
         Summary = summary;

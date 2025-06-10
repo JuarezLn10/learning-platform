@@ -66,7 +66,7 @@ public partial class Tutorial : IPublishable
                                    (string)asset.GetContent() == readableContent);
     }
 
-    private void AddVideo(string videoUrl)
+    public void AddVideo(string videoUrl)
     {
         if (ExistsVideoByUrl(videoUrl)) return;
         Assets.Add(new VideoAsset(videoUrl));
