@@ -31,9 +31,4 @@
         
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Publishing\Domain\Model\Events\" />
-      <Folder Include="Publishing\Domain\Model\Queries\" />
-    </ItemGroup>
-
 </Project>
