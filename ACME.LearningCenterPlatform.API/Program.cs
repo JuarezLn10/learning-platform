@@ -1,8 +1,14 @@
+using ACME.LearningCenterPlatform.API.Publishing.Application.Internal.CommandServices;
+using ACME.LearningCenterPlatform.API.Publishing.Application.Internal.QueryServices;
+using ACME.LearningCenterPlatform.API.Publishing.Domain.Repositories;
+using ACME.LearningCenterPlatform.API.Publishing.Domain.Services;
+using ACME.LearningCenterPlatform.API.Publishing.Infrastructure.Persistence.EFC.Repositories;
 using ACME.LearningCenterPlatform.API.Shared.Domain.Repositories;
 using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Interfaces.ASP.Configuration;
 using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Persistence.EFC.Configuration;
 using ACME.LearningCenterPlatform.API.Shared.Infrastructure.Persistence.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,7 +46,25 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 });
 
 // Add Swagger/OpenAPI support
-builder.Services.AddSwaggerGen(options => {
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ACME.LearningCenterPlatform.API",
+        Version = "v1",
+        Description = "ACME Learning Center Platform API",
+        TermsOfService = new Uri("https://acme-learning.com/tos"),
+        Contact = new OpenApiContact
+        {
+            Name = "ACME Studios",
+            Email = "contact@acme.com"
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Apache 2.0",
+            Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0.html")
+        },
+    });
     options.EnableAnnotations();
 });
 
@@ -48,6 +72,14 @@ builder.Services.AddSwaggerGen(options => {
 
 // Shared Bounded Context
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+// Publishing Bounded Context
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ITutorialRepository, TutorialRepository>();
+builder.Services.AddScoped<ICategoryCommandService, CategoryCommandService>();
+builder.Services.AddScoped<ITutorialCommandService, TutorialCommandService>();
+builder.Services.AddScoped<ICategoryQueryService, CategoryQueryService>();
+builder.Services.AddScoped<ITutorialQueryService, TutorialQueryService>();
 
 var app = builder.Build();
 
