@@ -4,7 +4,7 @@ namespace ACME.LearningCenterPlatform.API.Publishing.Domain.Model.Entities;
 
 public class ImageAsset(EAssetType type) : Asset(type)
 {
-    private Uri? ImageUri { get; }
+    public Uri? ImageUri { get; }
     
     public override bool Readable => false;
     public override bool Viewable => true;
